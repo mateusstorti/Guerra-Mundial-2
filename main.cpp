@@ -691,15 +691,15 @@ int Cena1()
 {
 	putimage(0, 0, C1, COPY_PUT);
 	outtextxy(0, 600, (char *)"O mundo inteiro estava em conflito.");
-	outtextxy(0, 630, (char *)"Cegos pelo egoÃ­smo e pela vontade de derrotar uns aos outros,");
-	outtextxy(0, 660, (char *)"os paÃ­ses nÃ£o tinham ideia do que estava se aproximando.");
+	outtextxy(0, 630, (char *)"Cegos pelo egoísmo e pela vontade de derrotar uns aos outros,");
+	outtextxy(0, 660, (char *)"os países não tinham ideia do que estava se aproximando.");
 	
 	delay(7000);
 
 	putimage(0, 0, C2, COPY_PUT);
-	outtextxy(0, 610, (char *)"Entendendo a gravidade da situaÃ§Ã£o, o cessar-fogo geral"); 
-	outtextxy(0, 640, (char *)"Ã© anunciado. Os paÃ­ses se uniram para conter a");
-	outtextxy(0, 670, (char *)"invasÃ£o alienÃ­gina e salvar a Terra.");
+	outtextxy(0, 610, (char *)"Entendendo a gravidade da situação, o cessar-fogo geral"); 
+	outtextxy(0, 640, (char *)"fora anunciado. Os países se uniram para conter a");
+	outtextxy(0, 670, (char *)"invasão alienígena e para salvar a Terra.");
 	delay(4000);
 	
 	settextstyle(0, 0, 1);
@@ -723,9 +723,9 @@ int CenaFinal()
 		cleardevice();
 		
 		putimage(0, 0, Final, COPY_PUT);
-		outtextxy(0, 600, (char *)"ApÃ³s a vitÃ³ria da raÃ§a humana sobre os alienÃ­ginas,");
-		outtextxy(0, 620, (char *)"os paÃ­ses perceberam a forÃ§a que eles possuÃ­am unidos.");
-		outtextxy(0, 640, (char *)"ApÃ³s a invasÃ£o, a guerra teve seu fim.");
+		outtextxy(0, 600, (char *)"Após a vitória da raça humana sobre os alienígenas,");
+		outtextxy(0, 620, (char *)"os países perceberam a força que eles possuíam unidos.");
+		outtextxy(0, 640, (char *)"E então, a guerra teve seu fim.");
 		outtextxy(0, 660, (char *)"O mundo finalmente estava em Paz!");
 		
 		setvisualpage(pg);
