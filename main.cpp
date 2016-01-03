@@ -337,8 +337,8 @@ int IniciaVarInim()
 	Boss[0].x = 350;
 	Boss[0].y = -200;
 	Boss[0].situacao = 0;
-	Boss[0].passoy = 1;
-	Boss[0].passox = 50;
+	Boss[0].passoy = 50;
+	Boss[0].passox = 4;
 	Boss[0].vida = 15;	
 }
 
@@ -441,16 +441,20 @@ int Chefao()
 		if(Boss[0].situacao == 1)
 		{
 			DesenhaBoss(); 
-			Boss[0].y = Boss[0].y + Boss[0].passoy;
 			
-			if(Boss[0].y >= 0)
+			if(Boss[0].y < 0)
 			{
-				Boss[0].y = 0;
-				Boss[0].x = Boss[0].x + Boss[0].passox;	
+				Boss[0].y += Boss[0].passoy;
+			}
+			else
+			{
+				Boss[0].x += Boss[0].passox;	
 				
-				if(Boss[0].x < 0) Boss[0].passox = -Boss[0].passox;
-				if(Boss[0].x > 700) Boss[0].passox = -Boss[0].passox;
-				
+				if(Boss[0].x < 0 || Boss[0].x > 700)
+				{
+					Boss[0].passox = -Boss[0].passox;
+					Boss[0].y += Boss[0].passoy;
+				}
 			}
 		}	
 }
