@@ -127,9 +127,9 @@ int main()
 	
 	while(status != 0)
 	{
-		if(status = 1)	Jogo();
-		else if(status = 2)CenaFinal();
-		else if(status = 3)CenaGameOver();
+		if(status == 1)	Jogo();
+		else if(status == 2)CenaFinal();
+		else if(status == 3)CenaGameOver();
 
 	}
 	closegraph();
@@ -738,7 +738,7 @@ int CenaFinal()
 int CenaGameOver()
 {
 	int pg = 2;
-	while(status = 3)
+	while(status == 3)
 	{
 		if(pg == 2) pg = 1; else pg =1;
 		setactivepage(pg);
