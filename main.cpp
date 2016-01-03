@@ -47,9 +47,9 @@ using namespace std;
 #define P_GameOver "../GuerraMundial/Imagens/FimTexto.jpg"
 #define P_GameOver_M "../GuerraMundial/Imagens/FimTexto_M.jpg"
 
-int i, j, k, v, t, xmouse = 0, ymouse = 0, xbotao, ybotao, status, VidaPlayer = 5, VidaTerra = 10, contInimigos = 0, noInimigos,
+int i, j, k, v, t, xmouse, ymouse , xbotao, ybotao, status, VidaPlayer , VidaTerra , contInimigos, noInimigos,
 	Tam_F, Tam_P, Tam_T, Tam_TM, Tam_I, Tam_IM, Tam_B, Tam_BM, Tam_VP, Tam_VT, Tam_BT, Tam_C1, Tam_C2, Tam_Final, Tam_TB, Tam_Texto;
-int tempoDecorrido, timer1 = 0, timer2 = 0, timerInimigo = 0, timerRespawn = 0, timerBoss = 0;
+int tempoDecorrido, timer1 , timer2 , timerInimigo , timerRespawn , timerBoss;
 char *Cont, *Texto;
 void *F, *PM, *P1, *P2, *TM, *T, *I1_M, *I1, *I2_M, *I2, *I3_M, *I3, *B, *BM, *TB, *TB_M, *VP, *VP_M, *VT, *VT_M, *BT_JM, *BT_SM, *BT_J, *BT_S, *C1, *C2, *Final, *G, *GM;
 
@@ -59,8 +59,9 @@ int Cena2();
 int CenaFinal();
 int CenaGameOver();
 int CarregaImagens();
-int InicializaVar();
-int varInimigos();
+int IniciaVarJog();
+int IniciaVarJogo();
+int IniciaVarInim();
 int DesenhaFundo();
 int DesenhaPlayer1();
 int DesenhaPlayer2();
@@ -71,7 +72,7 @@ int DesenhaVidaT();
 int MoveTiro(); 
 int ExecutaTiro();
 int InicializaInimigos();
-int InicializaBoss();
+int Chefao();
 int DesenhaBoss();
 int ContadorInimigos();
 int colisaoTiro();
@@ -120,16 +121,21 @@ int main()
 	srand(time(NULL));
 	status = 1;
 	initwindow(MaxX, MaxY);
+	settextstyle(COMPLEX_FONT,HORIZ_DIR,1);
+	IniciaVarJogo();
+	IniciaVarJog();
+	IniciaVarInim();
 	
-	InicializaVar();
-	varInimigos();
+	setactivepage(1);
 	CarregaImagens();
+	cleardevice();
+	setvisualpage(1);
 	
 	while(status != 0)
 	{
-		if(status = 1)	Jogo();
-		else if(status = 2)CenaFinal();
-		else if(status = 3)CenaGameOver();
+		if(status == 1)	Jogo();
+		else if(status == 2)CenaFinal();
+		else if(status == 3)CenaGameOver();
 
 	}
 	closegraph();
@@ -274,8 +280,23 @@ int CarregaImagens()
 	getimage(0, 300, MaxX, 600, GM);
 }
 
-//INICIALIZA AS VARI√ÅVEIS DOS JOGADORES E DOS TIROS
-int InicializaVar()
+// Inicia algumas vari·veis do jogo
+int IniciaVarJogo()
+{
+	VidaPlayer = 5;
+	VidaTerra = 10;
+	contInimigos = 0;
+	timer1 = 0;
+	timer2 = 0;
+	timerInimigo = 0;
+	timerRespawn = 0;
+	timerBoss = 0;
+}
+
+
+
+// Inicializa as vari·veis dos jogadores e dos tiros
+int IniciaVarJog()
 {
 	Player[0].x = 700;
 	Player[0].y = MaxY - 60;
@@ -306,7 +327,7 @@ int InicializaVar()
 }
 
 //INICIALIZA AS VARI√ÅVEIS DOS INIMIGOS
-int varInimigos()
+int IniciaVarInim()
 {
 	for(i = 0; i < MaxInimigos; i++)
 	{
@@ -320,7 +341,7 @@ int varInimigos()
 	Boss[0].x = 350;
 	Boss[0].y = -200;
 	Boss[0].situacao = 0;
-	Boss[0].passoy = 1;
+	Boss[0].passoy = 50;
 	Boss[0].passox = 4;
 	Boss[0].vida = 15;	
 }
@@ -416,7 +437,7 @@ int InicializaInimigos()
 	}
 }
 
-int InicializaBoss()
+int Chefao()
 {
 	if(contInimigos >= MaxInimigos) Boss[0].situacao = 1;
 	
@@ -424,16 +445,20 @@ int InicializaBoss()
 		if(Boss[0].situacao == 1)
 		{
 			DesenhaBoss(); 
-			Boss[0].y = Boss[0].y + Boss[0].passoy;
 			
-			if(Boss[0].y >= 0)
+			if(Boss[0].y < 0)
 			{
-				Boss[0].y = 0;
-				Boss[0].x = Boss[0].x + Boss[0].passox;	
+				Boss[0].y += Boss[0].passoy;
+			}
+			else
+			{
+				Boss[0].x += Boss[0].passox;	
 				
-				if(Boss[0].x < 0) Boss[0].passox = -Boss[0].passox;
-				if(Boss[0].x > 700) Boss[0].passox = -Boss[0].passox;
-				
+				if(Boss[0].x < 0 || Boss[0].x > 700)
+				{
+					Boss[0].passox = -Boss[0].passox;
+					Boss[0].y += Boss[0].passoy;
+				}
 			}
 		}	
 }
@@ -690,20 +715,19 @@ int GameOver()
 int Cena1()
 {
 	putimage(0, 0, C1, COPY_PUT);
-	outtextxy(0, 600, (char *)"O mundo inteiro estava em conflito.");
-	outtextxy(0, 630, (char *)"Cegos pelo egoÌsmo e pela vontade de derrotar uns aos outros,");
-	outtextxy(0, 660, (char *)"os paÌses n„o tinham ideia do que estava se aproximando.");
+	outtextxy(5, 600, (char *)"O mundo inteiro estava em conflito.");
+	outtextxy(5, 630, (char *)"Cegos pelo egoÌsmo e pela vontade de derrotar uns aos outros,");
+	outtextxy(5, 660, (char *)"os paÌses n„o tinham ideia do que estava se aproximando.");
 	
 	delay(7000);
 
 	putimage(0, 0, C2, COPY_PUT);
-	outtextxy(0, 610, (char *)"Entendendo a gravidade da situaÁ„o, o cessar-fogo geral"); 
-	outtextxy(0, 640, (char *)"fora anunciado. Os paÌses se uniram para conter a");
-	outtextxy(0, 670, (char *)"invas„o alienÌgena e para salvar a Terra.");
+	outtextxy(5, 600, (char *)"Entendendo a gravidade da situaÁ„o, o cessar-fogo geral"); 
+	outtextxy(5, 630, (char *)"fora anunciado. Os paÌses se uniram para conter a");
+	outtextxy(5, 660, (char *)"invas„o alienÌgena e para salvar a Terra.");
 	delay(4000);
-	
-	settextstyle(0, 0, 1);
-	outtextxy(550, 680, (char *)"Pressione qualquer tecla para continuar.");
+
+	outtextxy(470, 680, (char *)"Pressione qualquer tecla para continuar");
 	getch();
 	delay(1000);
 }
@@ -713,7 +737,6 @@ int CenaFinal()
 {
 	int pg = 2;
 
-	settextstyle(0, 0, 2);
 	setcolor(15);
 	setfillstyle(0, 15);	
 	while(status = 2)
@@ -725,7 +748,7 @@ int CenaFinal()
 		putimage(0, 0, Final, COPY_PUT);
 		outtextxy(0, 600, (char *)"ApÛs a vitÛria da raÁa humana sobre os alienÌgenas,");
 		outtextxy(0, 620, (char *)"os paÌses perceberam a forÁa que eles possuÌam unidos.");
-		outtextxy(0, 640, (char *)"E ent„o, a guerra teve seu fim.");
+		outtextxy(0, 640, (char *)"E,ent„o,a guerra teve seu fim.");
 		outtextxy(0, 660, (char *)"O mundo finalmente estava em Paz!");
 		
 		setvisualpage(pg);
@@ -738,7 +761,7 @@ int CenaFinal()
 int CenaGameOver()
 {
 	int pg = 2;
-	while(status = 3)
+	while(status == 3)
 	{
 		if(pg == 2) pg = 1; else pg =1;
 		setactivepage(pg);
@@ -761,7 +784,6 @@ int Jogo()
 	int pg = 2; 
 	char tecla = 0;
 	
-	settextstyle(0, 0, 2);
 	setcolor(15);
 	setfillstyle(1, 15);
 	
@@ -797,7 +819,7 @@ int Jogo()
 		InicializaInimigos();
 		
 		
-		InicializaBoss();			
+		Chefao();			
 		
 		setvisualpage(pg);
 		
