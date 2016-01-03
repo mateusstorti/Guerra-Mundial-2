@@ -47,9 +47,9 @@ using namespace std;
 #define P_GameOver "../GuerraMundial/Imagens/FimTexto.jpg"
 #define P_GameOver_M "../GuerraMundial/Imagens/FimTexto_M.jpg"
 
-int i, j, k, v, t, xmouse = 0, ymouse = 0, xbotao, ybotao, status, VidaPlayer = 5, VidaTerra = 10, contInimigos = 0, noInimigos,
+int i, j, k, v, t, xmouse, ymouse , xbotao, ybotao, status, VidaPlayer , VidaTerra , contInimigos, noInimigos,
 	Tam_F, Tam_P, Tam_T, Tam_TM, Tam_I, Tam_IM, Tam_B, Tam_BM, Tam_VP, Tam_VT, Tam_BT, Tam_C1, Tam_C2, Tam_Final, Tam_TB, Tam_Texto;
-int tempoDecorrido, timer1 = 0, timer2 = 0, timerInimigo = 0, timerRespawn = 0, timerBoss = 0;
+int tempoDecorrido, timer1 , timer2 , timerInimigo , timerRespawn , timerBoss;
 char *Cont, *Texto;
 void *F, *PM, *P1, *P2, *TM, *T, *I1_M, *I1, *I2_M, *I2, *I3_M, *I3, *B, *BM, *TB, *TB_M, *VP, *VP_M, *VT, *VT_M, *BT_JM, *BT_SM, *BT_J, *BT_S, *C1, *C2, *Final, *G, *GM;
 
@@ -59,8 +59,9 @@ int Cena2();
 int CenaFinal();
 int CenaGameOver();
 int CarregaImagens();
-int InicializaVar();
-int varInimigos();
+int IniciaVarJog();
+int IniciaVarJogo();
+int IniciaVarInim();
 int DesenhaFundo();
 int DesenhaPlayer1();
 int DesenhaPlayer2();
@@ -121,8 +122,9 @@ int main()
 	status = 1;
 	initwindow(MaxX, MaxY);
 	
-	InicializaVar();
-	varInimigos();
+	IniciaVarJogo();
+	IniciaVarJog();
+	IniciaVarInim();
 	CarregaImagens();
 	
 	while(status != 0)
@@ -274,8 +276,23 @@ int CarregaImagens()
 	getimage(0, 300, MaxX, 600, GM);
 }
 
-//INICIALIZA AS VARI√ÅVEIS DOS JOGADORES E DOS TIROS
-int InicializaVar()
+// Inicia algumas vari·veis do jogo
+int IniciaVarJogo()
+{
+	VidaPlayer = 5;
+	VidaTerra = 10;
+	contInimigos = 0;
+	timer1 = 0;
+	timer2 = 0;
+	timerInimigo = 0;
+	timerRespawn = 0;
+	timerBoss = 0;
+}
+
+
+
+// Inicializa as vari·veis dos jogadores e dos tiros
+int IniciaVarJog()
 {
 	Player[0].x = 700;
 	Player[0].y = MaxY - 60;
@@ -306,7 +323,7 @@ int InicializaVar()
 }
 
 //INICIALIZA AS VARI√ÅVEIS DOS INIMIGOS
-int varInimigos()
+int IniciaVarInim()
 {
 	for(i = 0; i < MaxInimigos; i++)
 	{
@@ -725,7 +742,7 @@ int CenaFinal()
 		putimage(0, 0, Final, COPY_PUT);
 		outtextxy(0, 600, (char *)"ApÛs a vitÛria da raÁa humana sobre os alienÌgenas,");
 		outtextxy(0, 620, (char *)"os paÌses perceberam a forÁa que eles possuÌam unidos.");
-		outtextxy(0, 640, (char *)"E ent„o, a guerra teve seu fim.");
+		outtextxy(0, 640, (char *)"E,ent„o,a guerra teve seu fim.");
 		outtextxy(0, 660, (char *)"O mundo finalmente estava em Paz!");
 		
 		setvisualpage(pg);
