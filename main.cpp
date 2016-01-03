@@ -72,7 +72,7 @@ int DesenhaVidaT();
 int MoveTiro(); 
 int ExecutaTiro();
 int InicializaInimigos();
-int InicializaBoss();
+int Chefao();
 int DesenhaBoss();
 int ContadorInimigos();
 int colisaoTiro();
@@ -338,7 +338,7 @@ int IniciaVarInim()
 	Boss[0].y = -200;
 	Boss[0].situacao = 0;
 	Boss[0].passoy = 1;
-	Boss[0].passox = 4;
+	Boss[0].passox = 50;
 	Boss[0].vida = 15;	
 }
 
@@ -433,7 +433,7 @@ int InicializaInimigos()
 	}
 }
 
-int InicializaBoss()
+int Chefao()
 {
 	if(contInimigos >= MaxInimigos) Boss[0].situacao = 1;
 	
@@ -814,7 +814,7 @@ int Jogo()
 		InicializaInimigos();
 		
 		
-		InicializaBoss();			
+		Chefao();			
 		
 		setvisualpage(pg);
 		
