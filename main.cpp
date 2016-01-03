@@ -121,6 +121,7 @@ int main()
 	srand(time(NULL));
 	status = 1;
 	initwindow(MaxX, MaxY);
+	settextstyle(COMPLEX_FONT,HORIZ_DIR,1);
 	IniciaVarJogo();
 	IniciaVarJog();
 	IniciaVarInim();
@@ -714,20 +715,19 @@ int GameOver()
 int Cena1()
 {
 	putimage(0, 0, C1, COPY_PUT);
-	outtextxy(0, 600, (char *)"O mundo inteiro estava em conflito.");
-	outtextxy(0, 630, (char *)"Cegos pelo egoísmo e pela vontade de derrotar uns aos outros,");
-	outtextxy(0, 660, (char *)"os países não tinham ideia do que estava se aproximando.");
+	outtextxy(5, 600, (char *)"O mundo inteiro estava em conflito.");
+	outtextxy(5, 630, (char *)"Cegos pelo egoísmo e pela vontade de derrotar uns aos outros,");
+	outtextxy(5, 660, (char *)"os países não tinham ideia do que estava se aproximando.");
 	
 	delay(7000);
 
 	putimage(0, 0, C2, COPY_PUT);
-	outtextxy(0, 610, (char *)"Entendendo a gravidade da situação, o cessar-fogo geral"); 
-	outtextxy(0, 640, (char *)"fora anunciado. Os países se uniram para conter a");
-	outtextxy(0, 670, (char *)"invasão alienígena e para salvar a Terra.");
+	outtextxy(5, 600, (char *)"Entendendo a gravidade da situação, o cessar-fogo geral"); 
+	outtextxy(5, 630, (char *)"fora anunciado. Os países se uniram para conter a");
+	outtextxy(5, 660, (char *)"invasão alienígena e para salvar a Terra.");
 	delay(4000);
-	
-	settextstyle(0, 0, 1);
-	outtextxy(550, 680, (char *)"Pressione qualquer tecla para continuar.");
+
+	outtextxy(470, 680, (char *)"Pressione qualquer tecla para continuar");
 	getch();
 	delay(1000);
 }
@@ -737,7 +737,6 @@ int CenaFinal()
 {
 	int pg = 2;
 
-	settextstyle(0, 0, 2);
 	setcolor(15);
 	setfillstyle(0, 15);	
 	while(status = 2)
@@ -785,7 +784,6 @@ int Jogo()
 	int pg = 2; 
 	char tecla = 0;
 	
-	settextstyle(0, 0, 2);
 	setcolor(15);
 	setfillstyle(1, 15);
 	
