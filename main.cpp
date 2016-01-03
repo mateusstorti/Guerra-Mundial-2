@@ -121,11 +121,14 @@ int main()
 	srand(time(NULL));
 	status = 1;
 	initwindow(MaxX, MaxY);
-	
 	IniciaVarJogo();
 	IniciaVarJog();
 	IniciaVarInim();
+	
+	setactivepage(1);
 	CarregaImagens();
+	cleardevice();
+	setvisualpage(1);
 	
 	while(status != 0)
 	{
